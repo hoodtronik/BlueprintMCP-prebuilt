@@ -1,0 +1,16 @@
+# UE5 build outputs
+# NOTE: This is the PREBUILT distribution — Binaries/ is intentionally tracked.
+Intermediate/
+*.pdb
+
+# TypeScript
+Tools/node_modules/
+Tools/dist/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vs/
+.vscode/
+*.suo
+*.user
