@@ -8,9 +8,12 @@ without a C++ toolchain or a compile-on-open step.
 - **Platform:** **Win64** (editor)
 - **Source repo:** https://github.com/hoodtronik/ue5-mcp
 
-> Built from [`hoodtronik/ue5-mcp`](https://github.com/hoodtronik/ue5-mcp) at the commit
-> that fixed the UE 5.6 `GetMaterialResource` API change. For source, contribution, and
-> the MCP server details, see that repo.
+> Built from [`hoodtronik/ue5-mcp`](https://github.com/hoodtronik/ue5-mcp) @ commit
+> [`717aead`](https://github.com/hoodtronik/ue5-mcp/commit/717aead) (branch
+> `feature/pcg-skills-examples-discovery`) — adds the `set_material_scalar_default` and
+> `reset_transaction_buffer` endpoints, PCG graph-authoring tools, and the
+> skills / examples / discovery systems. For source, contribution, and the MCP server
+> details, see that repo.
 
 ## Install
 

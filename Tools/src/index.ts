@@ -2,7 +2,6 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { getUEHealth, gracefulShutdown, state } from "./ue-bridge.js";
 
-// Tool registrations
 import { registerReadTools } from "./tools/read.js";
 import { registerMutationTools } from "./tools/mutation.js";
 import { registerVariableTools } from "./tools/variables.js";
@@ -20,19 +19,39 @@ import { registerUserTypeTools } from "./tools/user-types.js";
 import { registerMaterialReadTools } from "./tools/material-read.js";
 import { registerMaterialMutationTools } from "./tools/material-mutation.js";
 import { registerAnimationTools } from "./tools/animation-mutation.js";
-import { registerGroomTools } from "./tools/groom.js";
+import { registerLevelActorTools } from "./tools/level-actors.js";
+import { registerActorQueryTools } from "./tools/actor-query.js";
+import { registerSpatialTools } from "./tools/spatial.js";
+import { registerCameraTools } from "./tools/camera.js";
+import { registerViewModeTools } from "./tools/view-mode.js";
+import { registerPIERuntimeTools } from "./tools/pie-runtime.js";
+import { registerSublevelTools } from "./tools/sublevels.js";
+import { registerEditorUtilityTools } from "./tools/editor-utils.js";
+import { registerSelectionTools } from "./tools/selection.js";
+import { registerCVarTools } from "./tools/cvars.js";
+import { registerOutputLogTools } from "./tools/output-log.js";
 import { registerScreenshotTools } from "./tools/screenshot.js";
+import { registerPIELifecycleTools } from "./tools/pie-lifecycle.js";
+import { registerContentBrowserTools } from "./tools/content-browser.js";
+import { registerUndoRedoTools } from "./tools/undo-redo.js";
+import { registerWidgetTools } from "./tools/widgets.js";
+import { registerLevelTools } from "./tools/level.js";
+import { registerNiagaraTools } from "./tools/niagara.js";
+import { registerRunPythonTools } from "./tools/run-python.js";
+// CLAUDE-NOTE: merged back — Groom is this repo's own toolset (has C++ backing); the global server
+// sync didn't include it. Keep it alongside Niagara so no tools are lost.
+import { registerGroomTools } from "./tools/groom.js";
+import { registerPcgTools } from "./tools/pcg.js";
+import { registerPcgAuthoringTools } from "./tools/pcg-authoring.js";
 
-// Resource registrations
 import { registerBlueprintListResource } from "./resources/blueprint-list.js";
 import { registerWorkflowRecipesResource } from "./resources/workflow-recipes.js";
+import { registerSkills } from "./skills/index.js";
+import { registerExamples } from "./examples/index.js";
+import { registerDiscoveryMode } from "./discovery/index.js";
 
-const server = new McpServer({
-  name: "blueprint-mcp",
-  version: "1.0.0",
-});
+const server = new McpServer({ name: "blueprint-mcp", version: "1.0.0" });
 
-// Register all tools
 registerReadTools(server);
 registerMutationTools(server);
 registerVariableTools(server);
@@ -50,20 +69,42 @@ registerUserTypeTools(server);
 registerMaterialReadTools(server);
 registerMaterialMutationTools(server);
 registerAnimationTools(server);
-registerGroomTools(server);
+registerLevelActorTools(server);
+registerActorQueryTools(server);
+registerSpatialTools(server);
+registerCameraTools(server);
+registerViewModeTools(server);
+registerPIERuntimeTools(server);
+registerSublevelTools(server);
+registerEditorUtilityTools(server);
+registerSelectionTools(server);
+registerCVarTools(server);
+registerOutputLogTools(server);
 registerScreenshotTools(server);
+registerPIELifecycleTools(server);
+registerContentBrowserTools(server);
+registerUndoRedoTools(server);
+registerWidgetTools(server);
+registerLevelTools(server);
+registerNiagaraTools(server);
+registerRunPythonTools(server);
+registerGroomTools(server);
+registerPcgTools(server);
+registerPcgAuthoringTools(server);
 
-// Register resources
 registerBlueprintListResource(server);
 registerWorkflowRecipesResource(server);
+registerSkills(server);
+registerExamples(server);
 
-// Cleanup on exit — only kill the commandlet if we spawned it (don't kill the editor).
+// Opt-in (MCP_DISCOVERY_MODE=true). Must run LAST — after every tool is registered —
+// so the catalog sees them. No-op when the env var is unset (default behavior).
+registerDiscoveryMode(server);
+
 process.on("exit", () => { if (!state.editorMode) state.ueProcess?.kill(); });
 for (const sig of ["SIGINT", "SIGTERM"] as const) {
   process.on(sig, async () => {
-    if (!state.editorMode && state.ueProcess) {
-      await gracefulShutdown();
-    }
+    if (!state.editorMode && state.ueProcess) await gracefulShutdown();
     process.exit();
   });
 }
@@ -77,12 +118,8 @@ async function main() {
     state.editorMode = false;
     console.error("UE5 server not detected. Commandlet will be spawned on first tool call.");
   }
-
   const transport = new StdioServerTransport();
   await server.connect(transport);
 }
 
-main().catch((err) => {
-  console.error("Fatal error:", err);
-  process.exit(1);
-});
+main().catch((err) => { console.error("Fatal error:", err); process.exit(1); });
