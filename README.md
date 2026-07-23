@@ -8,24 +8,19 @@ without a C++ toolchain or a compile-on-open step.
 - **Platform:** **Win64** (editor)
 - **Source repo:** https://github.com/hoodtronik/ue5-mcp
 
-> `Binaries/Win64/` is built from [`hoodtronik/ue5-mcp`](https://github.com/hoodtronik/ue5-mcp) @
-> commit [`a9c48f7`](https://github.com/hoodtronik/ue5-mcp/commit/a9c48f7) (branch `main`) —
-> adds **`build_graph`**: create many nodes, wire them together, and set pin defaults in a
-> single call, with one compile+save for the whole batch instead of one per node. Built on
-> top of the PCG graph-authoring tools, the skills / examples / discovery systems, and the
-> `set_material_scalar_default` / `reset_transaction_buffer` endpoints.
->
-> `Source/`, `Config/`, and `Tools/` are refreshed to
-> [`d27359a`](https://github.com/hoodtronik/ue5-mcp/commit/d27359a) — TypeScript-only changes
-> across several commits: 4 new MCP tools (`rebuild_groom_bindings`, `list_mirror_table_rows`,
-> `set_mirror_table_rows`, `remove_mirror_table_rows`) with a TS/C++ route-parity test;
-> `discover_python_class` / `discover_python_search` (structured Python API introspection over
-> the `run_python` bridge); three new skill packs (Niagara, Groom, Mirror Data Tables); a fix for
-> 4 tools whose `batch` mode was silently unusable (schema validation rejected batch-only calls
-> before the handler ever ran) plus a standing invariant test; and `refresh_agent_config`, which
-> writes a managed capability-reference block into a consuming project's
-> CLAUDE.md/AGENTS.md/GEMINI.md. None of this touched C++, so the prebuilt binary above is still
-> the `a9c48f7` build. For source, contribution, and the MCP server details, see that repo.
+> Built from [`hoodtronik/ue5-mcp`](https://github.com/hoodtronik/ue5-mcp) @ commit
+> [`27b1525`](https://github.com/hoodtronik/ue5-mcp/commit/27b1525) (branch `main`) — includes a
+> fix for [mirno-ehf/ue5-mcp#70](https://github.com/mirno-ehf/ue5-mcp/issues/70): `add_node` on an
+> Animation/Actor Blueprint override event (e.g. `BlueprintUpdateAnimation`) could silently lose
+> its wiring later, because UE's auto-placed "ghost" stub event was only weakly promoted when a
+> connection was made to it. `add_node` now permanently promotes the node the same way a real
+> "implement this override" editor action does. `Binaries/Win64/` is a fresh build including this
+> fix. Also carries everything TypeScript-only from the prior refresh: 4 new MCP tools
+> (`rebuild_groom_bindings`, `list_mirror_table_rows`, `set_mirror_table_rows`,
+> `remove_mirror_table_rows`) with a TS/C++ route-parity test; `discover_python_class` /
+> `discover_python_search`; three new skill packs (Niagara, Groom, Mirror Data Tables); a batch-mode
+> schema fix across 4 tools with a standing invariant test; and `refresh_agent_config`. For source,
+> contribution, and the MCP server details, see that repo.
 
 ## Install
 
