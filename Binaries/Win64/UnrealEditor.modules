@@ -2,6 +2,6 @@
 	"BuildId": "43139311",
 	"Modules": 
 	{
-		"BlueprintMCP": "UnrealEditor-BlueprintMCP.dll"
+		"VoxelWorld": "UnrealEditor-VoxelWorld.dll"
 	}
 }

@@ -51,7 +51,20 @@ public class BlueprintMCP : ModuleRules
 			"PCG",
 			// CLAUDE-NOTE: NiagaraEditor exposes factories, the stack ViewModel, and module
 			// library helpers — all editor-only. Wrap usage with WITH_EDITOR.
-			"NiagaraEditor"
+			"NiagaraEditor",
+			// CLAUDE-NOTE: added for USourceControlHelpers::CheckOutFile (github.com/mirno-ehf/ue5-mcp#88,
+			// #66) — MCP saves now check out via the active source control provider before writing,
+			// instead of only stripping the read-only bit. Safe no-op when SC isn't configured.
+			"SourceControl",
+			// CLAUDE-NOTE: added for GGameThreadTime/GRenderThreadTime/GRHIThreadTime
+			// (get_frame_timing — the scoped-down "profiling service" backlog item). Engine
+			// already pulls RenderCore in transitively; explicit for clarity.
+			"RenderCore",
+			// CLAUDE-NOTE: SGraphEditor came for free via UnrealEd (it's declared in
+			// UnrealEd/Public/GraphEditor.h), but SGraphPanel::Update() lives in the separate
+			// GraphEditor module and wasn't linkable without this — screenshot_graph (#65) needs it
+			// to force the panel to build its node widgets before an off-screen render.
+			"GraphEditor"
 		});
 	}
 }
