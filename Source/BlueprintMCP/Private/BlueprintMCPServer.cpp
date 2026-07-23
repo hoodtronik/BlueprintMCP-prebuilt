@@ -858,6 +858,177 @@ bool FBlueprintMCPServer::Start(int32 InPort, bool bEditorMode)
 	Router->BindRoute(FHttpPath(TEXT("/api/is-pie-running")), EHttpServerRequestVerbs::VERB_POST,
 		QueuedHandler(TEXT("isPieRunning")));
 
+	// CLAUDE-NOTE: routes below were missing entirely -- their handlers were implemented and
+	// declared but never bound, so the matching MCP tools were advertised to agents and 404'd
+	// at runtime. Adding a handler requires BOTH a BindRoute here AND a HandlerMap entry in
+	// RegisterHandlers(); forgetting either produces exactly that silent failure.
+	Router->BindRoute(FHttpPath(TEXT("/api/actor-properties")), EHttpServerRequestVerbs::VERB_GET,
+		QueuedHandler(TEXT("actorProperties")));
+	Router->BindRoute(FHttpPath(TEXT("/api/add-widget")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("addWidget")));
+	Router->BindRoute(FHttpPath(TEXT("/api/attach-actor")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("attachActor")));
+	Router->BindRoute(FHttpPath(TEXT("/api/begin-transaction")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("beginTransaction")));
+	Router->BindRoute(FHttpPath(TEXT("/api/clear-output-log")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("clearOutputLog")));
+	Router->BindRoute(FHttpPath(TEXT("/api/clear-selection")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("clearSelection")));
+	Router->BindRoute(FHttpPath(TEXT("/api/create-widget-blueprint")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("createWidgetBlueprint")));
+	Router->BindRoute(FHttpPath(TEXT("/api/current-level")), EHttpServerRequestVerbs::VERB_GET,
+		QueuedHandler(TEXT("currentLevel")));
+	Router->BindRoute(FHttpPath(TEXT("/api/delete-actor")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("deleteActor")));
+	Router->BindRoute(FHttpPath(TEXT("/api/detach-actor")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("detachActor")));
+	Router->BindRoute(FHttpPath(TEXT("/api/duplicate-actor")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("duplicateActor")));
+	Router->BindRoute(FHttpPath(TEXT("/api/editor-notification")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("editorNotification")));
+	Router->BindRoute(FHttpPath(TEXT("/api/end-transaction")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("endTransaction")));
+	Router->BindRoute(FHttpPath(TEXT("/api/find-actors-by-class")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("findActorsByClass")));
+	Router->BindRoute(FHttpPath(TEXT("/api/find-actors-by-tag")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("findActorsByTag")));
+	Router->BindRoute(FHttpPath(TEXT("/api/find-actors-in-radius")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("findActorsInRadius")));
+	Router->BindRoute(FHttpPath(TEXT("/api/focus-actor")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("focusActor")));
+	Router->BindRoute(FHttpPath(TEXT("/api/get-actor-bounds")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("getActorBounds")));
+	Router->BindRoute(FHttpPath(TEXT("/api/get-cvar")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("getCvar")));
+	Router->BindRoute(FHttpPath(TEXT("/api/get-dirty-packages")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("getDirtyPackages")));
+	Router->BindRoute(FHttpPath(TEXT("/api/get-editor-selection")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("getEditorSelection")));
+	Router->BindRoute(FHttpPath(TEXT("/api/get-level-info")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("getLevelInfo")));
+	Router->BindRoute(FHttpPath(TEXT("/api/get-output-log")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("getOutputLog")));
+	Router->BindRoute(FHttpPath(TEXT("/api/get-viewport-camera")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("getViewportCamera")));
+	Router->BindRoute(FHttpPath(TEXT("/api/get-widget-properties")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("getWidgetProperties")));
+	Router->BindRoute(FHttpPath(TEXT("/api/list-actors")), EHttpServerRequestVerbs::VERB_GET,
+		QueuedHandler(TEXT("listActors")));
+	Router->BindRoute(FHttpPath(TEXT("/api/list-cvars")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("listCvars")));
+	Router->BindRoute(FHttpPath(TEXT("/api/list-sublevels")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("listSublevels")));
+	Router->BindRoute(FHttpPath(TEXT("/api/list-widget-tree")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("listWidgetTree")));
+	Router->BindRoute(FHttpPath(TEXT("/api/load-sublevel")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("loadSublevel")));
+	Router->BindRoute(FHttpPath(TEXT("/api/move-widget")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("moveWidget")));
+	Router->BindRoute(FHttpPath(TEXT("/api/navigate-content-browser")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("navigateContentBrowser")));
+	Router->BindRoute(FHttpPath(TEXT("/api/open-asset-editor")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("openAssetEditor")));
+	Router->BindRoute(FHttpPath(TEXT("/api/pie-get-player-transform")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("pieGetPlayerTransform")));
+	Router->BindRoute(FHttpPath(TEXT("/api/pie-pause")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("piePause")));
+	Router->BindRoute(FHttpPath(TEXT("/api/pie-query-actors")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("pieQueryActors")));
+	Router->BindRoute(FHttpPath(TEXT("/api/pie-teleport-player")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("pieTeleportPlayer")));
+	Router->BindRoute(FHttpPath(TEXT("/api/raycast")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("raycast")));
+	Router->BindRoute(FHttpPath(TEXT("/api/redo")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("redo")));
+	Router->BindRoute(FHttpPath(TEXT("/api/remove-widget")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("removeWidget")));
+	Router->BindRoute(FHttpPath(TEXT("/api/rename-actor")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("renameActor")));
+	Router->BindRoute(FHttpPath(TEXT("/api/save-all")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("saveAll")));
+	Router->BindRoute(FHttpPath(TEXT("/api/selected-actors")), EHttpServerRequestVerbs::VERB_GET,
+		QueuedHandler(TEXT("selectedActors")));
+	Router->BindRoute(FHttpPath(TEXT("/api/set-actor-mobility")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("setActorMobility")));
+	Router->BindRoute(FHttpPath(TEXT("/api/set-actor-physics")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("setActorPhysics")));
+	Router->BindRoute(FHttpPath(TEXT("/api/set-actor-property")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("setActorProperty")));
+	Router->BindRoute(FHttpPath(TEXT("/api/set-actor-tags")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("setActorTags")));
+	Router->BindRoute(FHttpPath(TEXT("/api/set-actor-transform")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("setActorTransform")));
+	Router->BindRoute(FHttpPath(TEXT("/api/set-actor-visibility")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("setActorVisibility")));
+	Router->BindRoute(FHttpPath(TEXT("/api/set-cvar")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("setCvar")));
+	Router->BindRoute(FHttpPath(TEXT("/api/set-editor-selection")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("setEditorSelection")));
+	Router->BindRoute(FHttpPath(TEXT("/api/set-game-view")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("setGameView")));
+	Router->BindRoute(FHttpPath(TEXT("/api/set-realtime-rendering")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("setRealtimeRendering")));
+	Router->BindRoute(FHttpPath(TEXT("/api/set-show-flags")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("setShowFlags")));
+	Router->BindRoute(FHttpPath(TEXT("/api/set-view-mode")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("setViewMode")));
+	Router->BindRoute(FHttpPath(TEXT("/api/set-viewport-camera")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("setViewportCamera")));
+	Router->BindRoute(FHttpPath(TEXT("/api/set-viewport-type")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("setViewportType")));
+	Router->BindRoute(FHttpPath(TEXT("/api/set-widget-property")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("setWidgetProperty")));
+	Router->BindRoute(FHttpPath(TEXT("/api/spawn-actor")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("spawnActor")));
+	Router->BindRoute(FHttpPath(TEXT("/api/undo")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("undo")));
+	Router->BindRoute(FHttpPath(TEXT("/api/unload-sublevel")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("unloadSublevel")));
+
+	// Niagara tools (Tier 1: asset creation + introspection)
+	Router->BindRoute(FHttpPath(TEXT("/api/create-niagara-system")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("createNiagaraSystem")));
+	Router->BindRoute(FHttpPath(TEXT("/api/create-niagara-emitter")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("createNiagaraEmitter")));
+	Router->BindRoute(FHttpPath(TEXT("/api/add-emitter-to-system")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("addEmitterToSystem")));
+	Router->BindRoute(FHttpPath(TEXT("/api/list-niagara-systems")), EHttpServerRequestVerbs::VERB_GET,
+		QueuedHandler(TEXT("listNiagaraSystems")));
+	Router->BindRoute(FHttpPath(TEXT("/api/get-niagara-system-summary")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("getNiagaraSystemSummary")));
+	Router->BindRoute(FHttpPath(TEXT("/api/get-niagara-emitter-summary")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("getNiagaraEmitterSummary")));
+
+	// Niagara tools (Tier 2: stack authoring)
+	Router->BindRoute(FHttpPath(TEXT("/api/add-niagara-module")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("addNiagaraModule")));
+	Router->BindRoute(FHttpPath(TEXT("/api/add-niagara-renderer")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("addNiagaraRenderer")));
+	Router->BindRoute(FHttpPath(TEXT("/api/set-module-input")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("setModuleInput")));
+	Router->BindRoute(FHttpPath(TEXT("/api/set-system-module-input")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("setSystemModuleInput")));
+	Router->BindRoute(FHttpPath(TEXT("/api/add-user-parameter")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("addUserParameter")));
+	Router->BindRoute(FHttpPath(TEXT("/api/set-user-parameter-default")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("setUserParameterDefault")));
+	Router->BindRoute(FHttpPath(TEXT("/api/list-module-library")), EHttpServerRequestVerbs::VERB_GET,
+		QueuedHandler(TEXT("listModuleLibrary")));
+	Router->BindRoute(FHttpPath(TEXT("/api/set-emitter-sim-target")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("setEmitterSimTarget")));
+	Router->BindRoute(FHttpPath(TEXT("/api/remove-niagara-renderer")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("removeNiagaraRenderer")));
+	Router->BindRoute(FHttpPath(TEXT("/api/remove-user-parameter")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("removeUserParameter")));
+	Router->BindRoute(FHttpPath(TEXT("/api/remove-emitter-from-system")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("removeEmitterFromSystem")));
+	Router->BindRoute(FHttpPath(TEXT("/api/list-emitter-modules")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("listEmitterModules")));
+	Router->BindRoute(FHttpPath(TEXT("/api/list-module-inputs")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("listModuleInputs")));
+	Router->BindRoute(FHttpPath(TEXT("/api/set-renderer-property")), EHttpServerRequestVerbs::VERB_POST,
+		QueuedHandler(TEXT("setRendererProperty")));
+
 	// Register TMap dispatch handlers
 	RegisterHandlers();
 
@@ -921,16 +1092,23 @@ bool FBlueprintMCPServer::ProcessOneRequest()
 	FString Response;
 	if (FRequestHandler* Handler = HandlerMap.Find(Req->Endpoint))
 	{
-		// Wrap mutation endpoints in an undo transaction so users can Ctrl+Z
+		// Wrap mutation endpoints in an undo transaction so users can Ctrl+Z.
+		// CLAUDE-NOTE: widget mutations are excluded — recompiling a Widget Blueprint creates
+		// REINST_ objects whose WidgetTree refs in the transaction buffer keep the old World
+		// alive, giving a fatal "World Leak" crash. Widget tools use snapshot/restore instead.
 		const bool bIsMutation = MutationEndpoints.Contains(Req->Endpoint);
-		if (bIsMutation && GEditor)
+		const bool bIsWidgetMutation = WidgetMutationEndpoints.Contains(Req->Endpoint);
+		const bool bUseTransaction = bIsMutation && !bIsWidgetMutation && GEditor != nullptr;
+		if (bUseTransaction)
 		{
 			GEditor->BeginTransaction(FText::FromString(FString::Printf(TEXT("BlueprintMCP: %s"), *Req->Endpoint)));
 		}
 
 		Response = (*Handler)(Req->QueryParams, Req->Body);
 
-		if (bIsMutation && GEditor)
+		// CLAUDE-NOTE: must mirror bUseTransaction exactly — gating End on bIsMutation alone would
+		// call EndTransaction without a matching BeginTransaction for widget mutations.
+		if (bUseTransaction)
 		{
 			GEditor->EndTransaction();
 		}
@@ -1018,6 +1196,64 @@ void FBlueprintMCPServer::RegisterHandlers()
 		TEXT("removeSkeletonSocket"),
 		TEXT("copySkeletonSockets"),
 		TEXT("rebuildGroomBindings"),
+		TEXT("attachActor"),
+		TEXT("detachActor"),
+		TEXT("duplicateActor"),
+		TEXT("renameActor"),
+		TEXT("setActorTags"),
+		TEXT("setViewportCamera"),
+		TEXT("setViewMode"),
+		TEXT("pieTeleportPlayer"),
+		TEXT("loadSublevel"),
+		TEXT("unloadSublevel"),
+		TEXT("saveAll"),
+		TEXT("setEditorSelection"),
+		TEXT("clearSelection"),
+		TEXT("setCVar"),
+		TEXT("clearOutputLog"),
+		TEXT("startPIE"),
+		TEXT("undo"),
+		TEXT("redo"),
+		TEXT("addWidget"),
+		TEXT("removeWidget"),
+		TEXT("setWidgetProperty"),
+		TEXT("moveWidget"),
+		TEXT("createWidgetBlueprint"),
+		// Level actor mutations
+		// CLAUDE-NOTE: these four were hyphenated on feature/describe-exposure-flags, but this set
+		// is matched against the DISPATCH KEY (see MutationEndpoints.Contains(Req->Endpoint)),
+		// which is camelCase — so the hyphenated spellings silently never matched and these
+		// mutations were never wrapped in an undo transaction. Corrected during the merge.
+		TEXT("setActorTransform"),
+		TEXT("setActorProperty"),
+		TEXT("spawnActor"),
+		TEXT("deleteActor"),
+		// Niagara mutations (Tier 1)
+		TEXT("createNiagaraSystem"),
+		TEXT("createNiagaraEmitter"),
+		TEXT("addEmitterToSystem"),
+		// Niagara mutations (Tier 2)
+		TEXT("addNiagaraModule"),
+		TEXT("addNiagaraRenderer"),
+		TEXT("setModuleInput"),
+		TEXT("addUserParameter"),
+		TEXT("setUserParameterDefault"),
+		TEXT("setEmitterSimTarget"),
+		TEXT("removeNiagaraRenderer"),
+		TEXT("removeUserParameter"),
+		TEXT("removeEmitterFromSystem"),
+		TEXT("setRendererProperty"),
+	};
+
+	// Widget mutations that must NOT be wrapped in undo transactions.
+	// Recompilation of Widget Blueprints creates REINST_ objects whose
+	// WidgetTree refs in the TransBuffer prevent World GC → fatal crash.
+	WidgetMutationEndpoints = {
+		TEXT("addWidget"),
+		TEXT("removeWidget"),
+		TEXT("setWidgetProperty"),
+		TEXT("moveWidget"),
+		TEXT("createWidgetBlueprint"),
 	};
 
 	// GET handlers (use QueryParams, ignore Body)
@@ -1161,6 +1397,105 @@ void FBlueprintMCPServer::RegisterHandlers()
 	HandlerMap.Add(TEXT("startPie"),                [this](const TMap<FString, FString>&, const FString& B) { return HandleStartPIE(B); });
 	HandlerMap.Add(TEXT("stopPie"),                 [this](const TMap<FString, FString>&, const FString& B) { return HandleStopPIE(B); });
 	HandlerMap.Add(TEXT("isPieRunning"),            [this](const TMap<FString, FString>&, const FString& B) { return HandleIsPIERunning(B); });
+
+	// CLAUDE-NOTE: dispatch entries paired with the BindRoute block in Start(). See the note
+	// there -- these handlers existed but were unreachable until both halves were registered.
+	HandlerMap.Add(TEXT("actorProperties"), [this](const TMap<FString, FString>& P, const FString& B) { return HandleGetActorProperties(P, B); });
+	HandlerMap.Add(TEXT("addWidget"), [this](const TMap<FString, FString>&, const FString& B) { return HandleAddWidget(B); });
+	HandlerMap.Add(TEXT("attachActor"), [this](const TMap<FString, FString>&, const FString& B) { return HandleAttachActor(B); });
+	HandlerMap.Add(TEXT("beginTransaction"), [this](const TMap<FString, FString>&, const FString& B) { return HandleBeginTransaction(B); });
+	HandlerMap.Add(TEXT("clearOutputLog"), [this](const TMap<FString, FString>&, const FString& B) { return HandleClearOutputLog(B); });
+	HandlerMap.Add(TEXT("clearSelection"), [this](const TMap<FString, FString>&, const FString& B) { return HandleClearSelection(B); });
+	HandlerMap.Add(TEXT("createWidgetBlueprint"), [this](const TMap<FString, FString>&, const FString& B) { return HandleCreateWidgetBlueprint(B); });
+	HandlerMap.Add(TEXT("currentLevel"), [this](const TMap<FString, FString>& P, const FString& B) { return HandleGetCurrentLevel(P, B); });
+	HandlerMap.Add(TEXT("deleteActor"), [this](const TMap<FString, FString>& P, const FString& B) { return HandleDeleteActor(P, B); });
+	HandlerMap.Add(TEXT("detachActor"), [this](const TMap<FString, FString>&, const FString& B) { return HandleDetachActor(B); });
+	HandlerMap.Add(TEXT("duplicateActor"), [this](const TMap<FString, FString>&, const FString& B) { return HandleDuplicateActor(B); });
+	HandlerMap.Add(TEXT("editorNotification"), [this](const TMap<FString, FString>&, const FString& B) { return HandleEditorNotification(B); });
+	HandlerMap.Add(TEXT("endTransaction"), [this](const TMap<FString, FString>&, const FString& B) { return HandleEndTransaction(B); });
+	HandlerMap.Add(TEXT("findActorsByClass"), [this](const TMap<FString, FString>&, const FString& B) { return HandleFindActorsByClass(B); });
+	HandlerMap.Add(TEXT("findActorsByTag"), [this](const TMap<FString, FString>&, const FString& B) { return HandleFindActorsByTag(B); });
+	HandlerMap.Add(TEXT("findActorsInRadius"), [this](const TMap<FString, FString>&, const FString& B) { return HandleFindActorsInRadius(B); });
+	HandlerMap.Add(TEXT("focusActor"), [this](const TMap<FString, FString>&, const FString& B) { return HandleFocusActor(B); });
+	HandlerMap.Add(TEXT("getActorBounds"), [this](const TMap<FString, FString>&, const FString& B) { return HandleGetActorBounds(B); });
+	HandlerMap.Add(TEXT("getCvar"), [this](const TMap<FString, FString>&, const FString& B) { return HandleGetCVar(B); });
+	HandlerMap.Add(TEXT("getDirtyPackages"), [this](const TMap<FString, FString>&, const FString& B) { return HandleGetDirtyPackages(B); });
+	HandlerMap.Add(TEXT("getEditorSelection"), [this](const TMap<FString, FString>&, const FString& B) { return HandleGetEditorSelection(B); });
+	HandlerMap.Add(TEXT("getLevelInfo"), [this](const TMap<FString, FString>&, const FString& B) { return HandleGetLevelInfo(B); });
+	HandlerMap.Add(TEXT("getOutputLog"), [this](const TMap<FString, FString>&, const FString& B) { return HandleGetOutputLog(B); });
+	HandlerMap.Add(TEXT("getViewportCamera"), [this](const TMap<FString, FString>&, const FString& B) { return HandleGetViewportCamera(B); });
+	HandlerMap.Add(TEXT("getWidgetProperties"), [this](const TMap<FString, FString>&, const FString& B) { return HandleGetWidgetProperties(B); });
+	HandlerMap.Add(TEXT("listActors"), [this](const TMap<FString, FString>& P, const FString& B) { return HandleListActors(P, B); });
+	HandlerMap.Add(TEXT("listCvars"), [this](const TMap<FString, FString>&, const FString& B) { return HandleListCVars(B); });
+	HandlerMap.Add(TEXT("listSublevels"), [this](const TMap<FString, FString>&, const FString& B) { return HandleListSublevels(B); });
+	HandlerMap.Add(TEXT("listWidgetTree"), [this](const TMap<FString, FString>&, const FString& B) { return HandleListWidgetTree(B); });
+	HandlerMap.Add(TEXT("loadSublevel"), [this](const TMap<FString, FString>&, const FString& B) { return HandleLoadSublevel(B); });
+	HandlerMap.Add(TEXT("moveWidget"), [this](const TMap<FString, FString>&, const FString& B) { return HandleMoveWidget(B); });
+	HandlerMap.Add(TEXT("navigateContentBrowser"), [this](const TMap<FString, FString>&, const FString& B) { return HandleNavigateContentBrowser(B); });
+	HandlerMap.Add(TEXT("openAssetEditor"), [this](const TMap<FString, FString>&, const FString& B) { return HandleOpenAssetEditor(B); });
+	HandlerMap.Add(TEXT("pieGetPlayerTransform"), [this](const TMap<FString, FString>&, const FString& B) { return HandlePIEGetPlayerTransform(B); });
+	HandlerMap.Add(TEXT("piePause"), [this](const TMap<FString, FString>&, const FString& B) { return HandlePIEPause(B); });
+	HandlerMap.Add(TEXT("pieQueryActors"), [this](const TMap<FString, FString>&, const FString& B) { return HandlePIEQueryActors(B); });
+	HandlerMap.Add(TEXT("pieTeleportPlayer"), [this](const TMap<FString, FString>&, const FString& B) { return HandlePIETeleportPlayer(B); });
+	HandlerMap.Add(TEXT("raycast"), [this](const TMap<FString, FString>&, const FString& B) { return HandleRaycast(B); });
+	HandlerMap.Add(TEXT("redo"), [this](const TMap<FString, FString>&, const FString& B) { return HandleRedo(B); });
+	HandlerMap.Add(TEXT("removeWidget"), [this](const TMap<FString, FString>&, const FString& B) { return HandleRemoveWidget(B); });
+	HandlerMap.Add(TEXT("renameActor"), [this](const TMap<FString, FString>&, const FString& B) { return HandleRenameActor(B); });
+	HandlerMap.Add(TEXT("saveAll"), [this](const TMap<FString, FString>&, const FString& B) { return HandleSaveAll(B); });
+	HandlerMap.Add(TEXT("selectedActors"), [this](const TMap<FString, FString>& P, const FString& B) { return HandleGetSelectedActors(P, B); });
+	HandlerMap.Add(TEXT("setActorMobility"), [this](const TMap<FString, FString>&, const FString& B) { return HandleSetActorMobility(B); });
+	HandlerMap.Add(TEXT("setActorPhysics"), [this](const TMap<FString, FString>&, const FString& B) { return HandleSetActorPhysics(B); });
+	HandlerMap.Add(TEXT("setActorProperty"), [this](const TMap<FString, FString>& P, const FString& B) { return HandleSetActorProperty(P, B); });
+	HandlerMap.Add(TEXT("setActorTags"), [this](const TMap<FString, FString>&, const FString& B) { return HandleSetActorTags(B); });
+	HandlerMap.Add(TEXT("setActorTransform"), [this](const TMap<FString, FString>& P, const FString& B) { return HandleSetActorTransform(P, B); });
+	HandlerMap.Add(TEXT("setActorVisibility"), [this](const TMap<FString, FString>&, const FString& B) { return HandleSetActorVisibility(B); });
+	HandlerMap.Add(TEXT("setCvar"), [this](const TMap<FString, FString>&, const FString& B) { return HandleSetCVar(B); });
+	HandlerMap.Add(TEXT("setEditorSelection"), [this](const TMap<FString, FString>&, const FString& B) { return HandleSetEditorSelection(B); });
+	HandlerMap.Add(TEXT("setGameView"), [this](const TMap<FString, FString>&, const FString& B) { return HandleSetGameView(B); });
+	HandlerMap.Add(TEXT("setRealtimeRendering"), [this](const TMap<FString, FString>&, const FString& B) { return HandleSetRealtimeRendering(B); });
+	HandlerMap.Add(TEXT("setShowFlags"), [this](const TMap<FString, FString>&, const FString& B) { return HandleSetShowFlags(B); });
+	HandlerMap.Add(TEXT("setViewMode"), [this](const TMap<FString, FString>&, const FString& B) { return HandleSetViewMode(B); });
+	HandlerMap.Add(TEXT("setViewportCamera"), [this](const TMap<FString, FString>&, const FString& B) { return HandleSetViewportCamera(B); });
+	HandlerMap.Add(TEXT("setViewportType"), [this](const TMap<FString, FString>&, const FString& B) { return HandleSetViewportType(B); });
+	HandlerMap.Add(TEXT("setWidgetProperty"), [this](const TMap<FString, FString>&, const FString& B) { return HandleSetWidgetProperty(B); });
+	HandlerMap.Add(TEXT("spawnActor"), [this](const TMap<FString, FString>& P, const FString& B) { return HandleSpawnActor(P, B); });
+	HandlerMap.Add(TEXT("undo"), [this](const TMap<FString, FString>&, const FString& B) { return HandleUndo(B); });
+	HandlerMap.Add(TEXT("unloadSublevel"), [this](const TMap<FString, FString>&, const FString& B) { return HandleUnloadSublevel(B); });
+	// Widget Blueprint handlers
+
+	// Niagara handlers (Tier 1)
+	HandlerMap.Add(TEXT("createNiagaraSystem"),        [this](const TMap<FString, FString>&, const FString& B) { return HandleCreateNiagaraSystem(B); });
+	HandlerMap.Add(TEXT("createNiagaraEmitter"),       [this](const TMap<FString, FString>&, const FString& B) { return HandleCreateNiagaraEmitter(B); });
+	HandlerMap.Add(TEXT("addEmitterToSystem"),         [this](const TMap<FString, FString>&, const FString& B) { return HandleAddEmitterToSystem(B); });
+	HandlerMap.Add(TEXT("listNiagaraSystems"),         [this](const TMap<FString, FString>& P, const FString&) { return HandleListNiagaraSystems(P); });
+	HandlerMap.Add(TEXT("getNiagaraSystemSummary"),    [this](const TMap<FString, FString>&, const FString& B) { return HandleGetNiagaraSystemSummary(B); });
+	HandlerMap.Add(TEXT("getNiagaraEmitterSummary"),   [this](const TMap<FString, FString>&, const FString& B) { return HandleGetNiagaraEmitterSummary(B); });
+
+	// Niagara handlers (Tier 2)
+	HandlerMap.Add(TEXT("addNiagaraModule"),           [this](const TMap<FString, FString>&, const FString& B) { return HandleAddNiagaraModule(B); });
+	HandlerMap.Add(TEXT("addNiagaraRenderer"),         [this](const TMap<FString, FString>&, const FString& B) { return HandleAddNiagaraRenderer(B); });
+	HandlerMap.Add(TEXT("setModuleInput"),             [this](const TMap<FString, FString>&, const FString& B) { return HandleSetModuleInput(B); });
+	HandlerMap.Add(TEXT("setSystemModuleInput"),       [this](const TMap<FString, FString>&, const FString& B) { return HandleSetSystemModuleInput(B); });
+	HandlerMap.Add(TEXT("addUserParameter"),           [this](const TMap<FString, FString>&, const FString& B) { return HandleAddUserParameter(B); });
+	HandlerMap.Add(TEXT("setUserParameterDefault"),    [this](const TMap<FString, FString>&, const FString& B) { return HandleSetUserParameterDefault(B); });
+	HandlerMap.Add(TEXT("listModuleLibrary"),          [this](const TMap<FString, FString>& P, const FString&) { return HandleListModuleLibrary(P); });
+	HandlerMap.Add(TEXT("setEmitterSimTarget"),        [this](const TMap<FString, FString>&, const FString& B) { return HandleSetEmitterSimTarget(B); });
+	HandlerMap.Add(TEXT("removeNiagaraRenderer"),      [this](const TMap<FString, FString>&, const FString& B) { return HandleRemoveNiagaraRenderer(B); });
+	HandlerMap.Add(TEXT("removeUserParameter"),        [this](const TMap<FString, FString>&, const FString& B) { return HandleRemoveUserParameter(B); });
+	HandlerMap.Add(TEXT("removeEmitterFromSystem"),    [this](const TMap<FString, FString>&, const FString& B) { return HandleRemoveEmitterFromSystem(B); });
+	HandlerMap.Add(TEXT("listEmitterModules"),         [this](const TMap<FString, FString>&, const FString& B) { return HandleListEmitterModules(B); });
+	HandlerMap.Add(TEXT("listModuleInputs"),           [this](const TMap<FString, FString>&, const FString& B) { return HandleListModuleInputs(B); });
+	HandlerMap.Add(TEXT("setRendererProperty"),        [this](const TMap<FString, FString>&, const FString& B) { return HandleSetRendererProperty(B); });
+
+	// Level actor handlers
+	HandlerMap.Add(TEXT("current-level"),       [this](const TMap<FString, FString>& P, const FString& B) { return HandleGetCurrentLevel(P, B); });
+	HandlerMap.Add(TEXT("list-actors"),         [this](const TMap<FString, FString>& P, const FString& B) { return HandleListActors(P, B); });
+	HandlerMap.Add(TEXT("actor-properties"),    [this](const TMap<FString, FString>& P, const FString& B) { return HandleGetActorProperties(P, B); });
+	HandlerMap.Add(TEXT("selected-actors"),     [this](const TMap<FString, FString>& P, const FString& B) { return HandleGetSelectedActors(P, B); });
+	HandlerMap.Add(TEXT("set-actor-transform"), [this](const TMap<FString, FString>& P, const FString& B) { return HandleSetActorTransform(P, B); });
+	HandlerMap.Add(TEXT("set-actor-property"),  [this](const TMap<FString, FString>& P, const FString& B) { return HandleSetActorProperty(P, B); });
+	HandlerMap.Add(TEXT("spawn-actor"),         [this](const TMap<FString, FString>& P, const FString& B) { return HandleSpawnActor(P, B); });
+	HandlerMap.Add(TEXT("delete-actor"),        [this](const TMap<FString, FString>& P, const FString& B) { return HandleDeleteActor(P, B); });
 }
 
 // ============================================================
@@ -1387,6 +1722,15 @@ TSharedRef<FJsonObject> FBlueprintMCPServer::SerializeBlueprint(UBlueprint* BP)
 		VJ->SetBoolField(TEXT("isMap"), V.VarType.IsMap());
 		VJ->SetStringField(TEXT("category"), V.Category.ToString());
 		VJ->SetStringField(TEXT("defaultValue"), V.DefaultValue);
+		// CLAUDE-NOTE: Emit exposure flags from PropertyFlags so consumers can tell which
+		// variables are surfaced to external systems (e.g. disguise/RenderStream reads
+		// "Instance Editable" public properties). Mirrors the bit logic in HandleSetVariableMetadata.
+		// "Instance Editable" in the BP editor == CPF_Edit set AND CPF_DisableEditOnInstance clear.
+		const uint64 PropFlags = V.PropertyFlags;
+		VJ->SetBoolField(TEXT("instanceEditable"),
+			(PropFlags & CPF_Edit) != 0 && (PropFlags & CPF_DisableEditOnInstance) == 0);
+		VJ->SetBoolField(TEXT("exposeOnSpawn"), (PropFlags & CPF_ExposeOnSpawn) != 0);
+		VJ->SetBoolField(TEXT("blueprintReadOnly"), (PropFlags & CPF_BlueprintReadOnly) != 0);
 		Vars.Add(MakeShared<FJsonValueObject>(VJ));
 	}
 	J->SetArrayField(TEXT("variables"), Vars);

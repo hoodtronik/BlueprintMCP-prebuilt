@@ -9,7 +9,7 @@ without a C++ toolchain or a compile-on-open step.
 - **Source repo:** https://github.com/hoodtronik/ue5-mcp
 
 > Built from [`hoodtronik/ue5-mcp`](https://github.com/hoodtronik/ue5-mcp) @ commit
-> [`b67783f`](https://github.com/hoodtronik/ue5-mcp/commit/b67783f) (branch `main`) —
+> [`a9c48f7`](https://github.com/hoodtronik/ue5-mcp/commit/a9c48f7) (branch `main`) —
 > adds **`build_graph`**: create many nodes, wire them together, and set pin defaults in a
 > single call, with one compile+save for the whole batch instead of one per node. Built on
 > top of the PCG graph-authoring tools, the skills / examples / discovery systems, and the
