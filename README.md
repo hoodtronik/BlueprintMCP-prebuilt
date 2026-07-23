@@ -16,11 +16,16 @@ without a C++ toolchain or a compile-on-open step.
 > `set_material_scalar_default` / `reset_transaction_buffer` endpoints.
 >
 > `Source/`, `Config/`, and `Tools/` are refreshed to
-> [`ee01b46`](https://github.com/hoodtronik/ue5-mcp/commit/ee01b46) — TypeScript-only changes
-> (4 new MCP tools: `rebuild_groom_bindings`, `list_mirror_table_rows`,
-> `set_mirror_table_rows`, `remove_mirror_table_rows`; a TS/C++ route-parity test), so the
-> prebuilt binary above is unchanged from `a9c48f7`. For source, contribution, and the MCP
-> server details, see that repo.
+> [`d27359a`](https://github.com/hoodtronik/ue5-mcp/commit/d27359a) — TypeScript-only changes
+> across several commits: 4 new MCP tools (`rebuild_groom_bindings`, `list_mirror_table_rows`,
+> `set_mirror_table_rows`, `remove_mirror_table_rows`) with a TS/C++ route-parity test;
+> `discover_python_class` / `discover_python_search` (structured Python API introspection over
+> the `run_python` bridge); three new skill packs (Niagara, Groom, Mirror Data Tables); a fix for
+> 4 tools whose `batch` mode was silently unusable (schema validation rejected batch-only calls
+> before the handler ever ran) plus a standing invariant test; and `refresh_agent_config`, which
+> writes a managed capability-reference block into a consuming project's
+> CLAUDE.md/AGENTS.md/GEMINI.md. None of this touched C++, so the prebuilt binary above is still
+> the `a9c48f7` build. For source, contribution, and the MCP server details, see that repo.
 
 ## Install
 
