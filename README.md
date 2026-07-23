@@ -9,11 +9,12 @@ without a C++ toolchain or a compile-on-open step.
 - **Source repo:** https://github.com/hoodtronik/ue5-mcp
 
 > Built from [`hoodtronik/ue5-mcp`](https://github.com/hoodtronik/ue5-mcp) @ commit
-> [`717aead`](https://github.com/hoodtronik/ue5-mcp/commit/717aead) (branch
-> `feature/pcg-skills-examples-discovery`) — adds the `set_material_scalar_default` and
-> `reset_transaction_buffer` endpoints, PCG graph-authoring tools, and the
-> skills / examples / discovery systems. For source, contribution, and the MCP server
-> details, see that repo.
+> [`b67783f`](https://github.com/hoodtronik/ue5-mcp/commit/b67783f) (branch `main`) —
+> adds **`build_graph`**: create many nodes, wire them together, and set pin defaults in a
+> single call, with one compile+save for the whole batch instead of one per node. Built on
+> top of the PCG graph-authoring tools, the skills / examples / discovery systems, and the
+> `set_material_scalar_default` / `reset_transaction_buffer` endpoints. For source,
+> contribution, and the MCP server details, see that repo.
 
 ## Install
 
