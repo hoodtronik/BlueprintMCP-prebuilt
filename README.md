@@ -8,13 +8,19 @@ without a C++ toolchain or a compile-on-open step.
 - **Platform:** **Win64** (editor)
 - **Source repo:** https://github.com/hoodtronik/ue5-mcp
 
-> Built from [`hoodtronik/ue5-mcp`](https://github.com/hoodtronik/ue5-mcp) @ commit
-> [`a9c48f7`](https://github.com/hoodtronik/ue5-mcp/commit/a9c48f7) (branch `main`) —
+> `Binaries/Win64/` is built from [`hoodtronik/ue5-mcp`](https://github.com/hoodtronik/ue5-mcp) @
+> commit [`a9c48f7`](https://github.com/hoodtronik/ue5-mcp/commit/a9c48f7) (branch `main`) —
 > adds **`build_graph`**: create many nodes, wire them together, and set pin defaults in a
 > single call, with one compile+save for the whole batch instead of one per node. Built on
 > top of the PCG graph-authoring tools, the skills / examples / discovery systems, and the
-> `set_material_scalar_default` / `reset_transaction_buffer` endpoints. For source,
-> contribution, and the MCP server details, see that repo.
+> `set_material_scalar_default` / `reset_transaction_buffer` endpoints.
+>
+> `Source/`, `Config/`, and `Tools/` are refreshed to
+> [`ee01b46`](https://github.com/hoodtronik/ue5-mcp/commit/ee01b46) — TypeScript-only changes
+> (4 new MCP tools: `rebuild_groom_bindings`, `list_mirror_table_rows`,
+> `set_mirror_table_rows`, `remove_mirror_table_rows`; a TS/C++ route-parity test), so the
+> prebuilt binary above is unchanged from `a9c48f7`. For source, contribution, and the MCP
+> server details, see that repo.
 
 ## Install
 
