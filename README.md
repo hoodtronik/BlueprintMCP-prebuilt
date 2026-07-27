@@ -10,7 +10,7 @@ without a C++ toolchain or a compile-on-open step.
 
 > Built from [`hoodtronik/Unreal-MCP-Ultra`](https://github.com/hoodtronik/Unreal-MCP-Ultra)
 > (formerly `ue5-mcp`) @ commit
-> [`4c849f1`](https://github.com/hoodtronik/Unreal-MCP-Ultra/commit/4c849f1) (branch `main`).
+> [`0e0a539`](https://github.com/hoodtronik/Unreal-MCP-Ultra/commit/0e0a539) (branch `main`).
 >
 > **New in this build — inline-image vision tools.** `viewport_capture` returns what the editor is
 > showing **inline in the tool result** as a PNG image block rather than writing a file and handing
@@ -30,7 +30,12 @@ without a C++ toolchain or a compile-on-open step.
 > methods plus path tracing, Lumen hardware ray tracing, MegaLights and auto-exposure, read from
 > live console variables rather than the project `.ini`. `set_renderer_mode` switches between
 > `lumen`, `pathtracer` and `baked` as a coherent set, and `configure_post_process` sets exposure,
-> bloom and Lumen quality on a post-process volume.
+> bloom and Lumen quality on a post-process volume. `spawn_sky` builds a complete outdoor set (sun,
+> sky light, SkyAtmosphere, height fog, volumetric clouds) with daylight / sunset / overcast / night
+> presets, and `validate_lighting` flags the mistakes that produce a plausible-looking but wrong
+> scene — an atmosphere with no sun assigned, a sky light needing recapture, zero-intensity lights,
+> more than four overlapping stationary lights (which silently exhausts UE's shadow channels), and
+> auto-exposure left unlocked so intensity edits appear to do nothing.
 >
 > Two correctness points worth knowing, both handled: the engine's `Set*` light functions are
 > runtime APIs that silently no-op on Static lights — and, for attenuation radius and spot cone
