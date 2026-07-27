@@ -10,7 +10,7 @@ without a C++ toolchain or a compile-on-open step.
 
 > Built from [`hoodtronik/Unreal-MCP-Ultra`](https://github.com/hoodtronik/Unreal-MCP-Ultra)
 > (formerly `ue5-mcp`) @ commit
-> [`31fb29c`](https://github.com/hoodtronik/Unreal-MCP-Ultra/commit/31fb29c) (branch `main`).
+> [`144d97c`](https://github.com/hoodtronik/Unreal-MCP-Ultra/commit/144d97c) (branch `main`).
 >
 > **New in this build — inline-image vision tools.** `viewport_capture` returns what the editor is
 > showing **inline in the tool result** as a PNG image block rather than writing a file and handing
@@ -59,6 +59,19 @@ without a C++ toolchain or a compile-on-open step.
 > with its identity only in a free-text title. Note that adding an expression regenerates earlier
 > nodes' graph GUIDs, so re-read the graph after your last add before calling
 > `connect_material_pins` — the tool descriptions spell this out.
+>
+> **Level management.** `open_level` and `new_level` switch to or create a level; previously the
+> plugin could inspect the current level and manage sublevels but not change which one was open.
+> Both refuse to run while packages are unsaved, because the underlying load runs under
+> `GIsRunningUnattendedScript` (which is what makes it safe to call without a modal dialog
+> deadlocking the editor) and would otherwise discard that work silently.
+>
+> `set_actor_property` now resolves a component by class when the literal name misses, so
+> `"StaticMeshComponent.StaticMesh"` works on a freshly spawned actor whose component is really
+> named `StaticMeshComponent0`. And `viewport_capture` gained `settle=true`: sky, atmosphere,
+> volumetric clouds, Lumen and real-time sky-light capture converge over seconds, and a tight
+> capture loop starves the editor of the ticks it needs — so an immediate capture after
+> `spawn_sky` returns the pre-change frame and looks like a broken capture.
 >
 > This build also resolves upstream issues [#63](https://github.com/mirno-ehf/ue5-mcp/issues/63),
 > [#67](https://github.com/mirno-ehf/ue5-mcp/issues/67),
