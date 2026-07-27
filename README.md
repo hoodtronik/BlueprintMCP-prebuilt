@@ -10,7 +10,7 @@ without a C++ toolchain or a compile-on-open step.
 
 > Built from [`hoodtronik/Unreal-MCP-Ultra`](https://github.com/hoodtronik/Unreal-MCP-Ultra)
 > (formerly `ue5-mcp`) @ commit
-> [`144d97c`](https://github.com/hoodtronik/Unreal-MCP-Ultra/commit/144d97c) (branch `main`).
+> [`53ccefb`](https://github.com/hoodtronik/Unreal-MCP-Ultra/commit/53ccefb) (branch `main`).
 >
 > **New in this build — inline-image vision tools.** `viewport_capture` returns what the editor is
 > showing **inline in the tool result** as a PNG image block rather than writing a file and handing
@@ -72,6 +72,12 @@ without a C++ toolchain or a compile-on-open step.
 > volumetric clouds, Lumen and real-time sky-light capture converge over seconds, and a tight
 > capture loop starves the editor of the ticks it needs — so an immediate capture after
 > `spawn_sky` returns the pre-change frame and looks like a broken capture.
+>
+> All six viewport tools (both captures, camera get/set, the view-mode family, and the high-res
+> screenshot) now share one viewport resolver. They previously each assumed
+> `GetLevelViewportClients()[0]`, which is not reliably a realized, sized viewport — so they could
+> act on a viewport nobody was looking at, and on a DIFFERENT one from the capture, making
+> `set_view_mode` appear to do nothing.
 >
 > This build also resolves upstream issues [#63](https://github.com/mirno-ehf/ue5-mcp/issues/63),
 > [#67](https://github.com/mirno-ehf/ue5-mcp/issues/67),
