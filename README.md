@@ -10,8 +10,19 @@ without a C++ toolchain or a compile-on-open step.
 
 > Built from [`hoodtronik/Unreal-MCP-Ultra`](https://github.com/hoodtronik/Unreal-MCP-Ultra)
 > (formerly `ue5-mcp`) @ commit
-> [`19b6d80`](https://github.com/hoodtronik/Unreal-MCP-Ultra/commit/19b6d80) (branch `main`) —
-> resolves upstream issues [#63](https://github.com/mirno-ehf/ue5-mcp/issues/63),
+> [`d4a1ddd`](https://github.com/hoodtronik/Unreal-MCP-Ultra/commit/d4a1ddd) (branch `main`).
+>
+> **New in this build — inline-image vision tools.** `viewport_capture` returns what the editor is
+> showing **inline in the tool result** as a PNG image block rather than writing a file and handing
+> back a path, so an agent can look at the level viewport, a running PIE session, or a Blueprint
+> node graph without spending extra tool calls on a file round-trip. `vision_mode` makes that
+> automatic: while enabled, every state-changing tool call gets a fresh frame appended, with the
+> capture target inferred from each tool's own arguments (graph edits show the graph, level edits
+> show the level) and unchanged frames suppressed by pixel digest. `scene_digest` provides a cheap
+> change-detection fingerprint. Requires a running editor — a headless commandlet has no render
+> device and says so explicitly.
+>
+> This build also resolves upstream issues [#63](https://github.com/mirno-ehf/ue5-mcp/issues/63),
 > [#67](https://github.com/mirno-ehf/ue5-mcp/issues/67),
 > [#69](https://github.com/mirno-ehf/ue5-mcp/issues/69),
 > [#56](https://github.com/mirno-ehf/ue5-mcp/issues/56),
