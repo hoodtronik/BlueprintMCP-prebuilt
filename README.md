@@ -10,7 +10,7 @@ without a C++ toolchain or a compile-on-open step.
 
 > Built from [`hoodtronik/Unreal-MCP-Ultra`](https://github.com/hoodtronik/Unreal-MCP-Ultra)
 > (formerly `ue5-mcp`) @ commit
-> [`0e0a539`](https://github.com/hoodtronik/Unreal-MCP-Ultra/commit/0e0a539) (branch `main`).
+> [`bf35a65`](https://github.com/hoodtronik/Unreal-MCP-Ultra/commit/bf35a65) (branch `main`).
 >
 > **New in this build — inline-image vision tools.** `viewport_capture` returns what the editor is
 > showing **inline in the tool result** as a PNG image block rather than writing a file and handing
@@ -21,6 +21,12 @@ without a C++ toolchain or a compile-on-open step.
 > show the level) and unchanged frames suppressed by pixel digest. `scene_digest` provides a cheap
 > change-detection fingerprint. Requires a running editor — a headless commandlet has no render
 > device and says so explicitly.
+>
+> This build was **verified live against a running editor**, not just against the headless test
+> suite, which found two bugs the headless tests structurally could not: `GetLevelViewportClients()[0]`
+> is not reliably a sized viewport (which had also been silently breaking the older
+> `take_screenshot`), and the duplicate-frame digest cannot be an exact pixel hash, because TAA and
+> temporal accumulation mean two captures of an unchanged scene are never bit-identical. Both fixed.
 >
 > **Also new — lighting and rendering tools.** `list_lights` reports every light in the level with its type,
 > mobility, intensity, colour, temperature and type-specific settings; there was previously no way
