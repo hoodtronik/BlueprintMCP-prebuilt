@@ -10,7 +10,7 @@ without a C++ toolchain or a compile-on-open step.
 
 > Built from [`hoodtronik/Unreal-MCP-Ultra`](https://github.com/hoodtronik/Unreal-MCP-Ultra)
 > (formerly `ue5-mcp`) @ commit
-> [`bf35a65`](https://github.com/hoodtronik/Unreal-MCP-Ultra/commit/bf35a65) (branch `main`).
+> [`31fb29c`](https://github.com/hoodtronik/Unreal-MCP-Ultra/commit/31fb29c) (branch `main`).
 >
 > **New in this build — inline-image vision tools.** `viewport_capture` returns what the editor is
 > showing **inline in the tool result** as a PNG image block rather than writing a file and handing
@@ -49,6 +49,16 @@ without a C++ toolchain or a compile-on-open step.
 > light properties are written directly instead. And every field of `FPostProcessSettings` is inert
 > unless its paired `bOverride_` flag is also set, so `configure_post_process` always sets both and
 > reports the flags back.
+>
+> **Materials, including Substrate.** `add_material_expression` resolves expression classes
+> dynamically, so any `UMaterialExpression` subclass works — including Substrate nodes
+> (`SubstrateSlabBSDF`, `SubstrateHorizontalMixing`, …), which wire into the material root's
+> `Front Material` pin. Confirmed end to end against a running editor. `get_material_graph` now also
+> reports each node's real `expressionClass` and a short `expressionType` that feeds straight back
+> into `add_material_expression`; previously every node came back as the generic `MaterialGraphNode`
+> with its identity only in a free-text title. Note that adding an expression regenerates earlier
+> nodes' graph GUIDs, so re-read the graph after your last add before calling
+> `connect_material_pins` — the tool descriptions spell this out.
 >
 > This build also resolves upstream issues [#63](https://github.com/mirno-ehf/ue5-mcp/issues/63),
 > [#67](https://github.com/mirno-ehf/ue5-mcp/issues/67),
