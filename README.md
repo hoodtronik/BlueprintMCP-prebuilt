@@ -10,7 +10,7 @@ without a C++ toolchain or a compile-on-open step.
 
 > Built from [`hoodtronik/Unreal-MCP-Ultra`](https://github.com/hoodtronik/Unreal-MCP-Ultra)
 > (formerly `ue5-mcp`) @ commit
-> [`bb45cde`](https://github.com/hoodtronik/Unreal-MCP-Ultra/commit/bb45cde) (branch `main`).
+> [`075904f`](https://github.com/hoodtronik/Unreal-MCP-Ultra/commit/075904f) (branch `main`).
 >
 > **New in this build — inline-image vision tools.** `viewport_capture` returns what the editor is
 > showing **inline in the tool result** as a PNG image block rather than writing a file and handing
