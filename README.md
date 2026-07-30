@@ -107,6 +107,30 @@ without a C++ toolchain or a compile-on-open step.
    ```
 3. Launch the editor — it loads the precompiled binary directly, no build required.
 
+### Optional: Riot Crowd
+
+`RiotCrowd/` is a separate, optional plugin (Mass-based crowd simulation). The core plugin works
+without it; the `riot_*` MCP tools simply report `featureInstalled: false` and print these
+instructions until it is present.
+
+It must be installed as a **sibling** of `BlueprintMCP`, not left nested inside it — Unreal's
+plugin scanner stops descending once it finds a `.uplugin`, so a nested plugin is never discovered:
+
+```
+YourProject/Plugins/BlueprintMCP/
+YourProject/Plugins/BlueprintMCPRiotCrowd/   <-- copy or junction RiotCrowd/ here
+```
+
+Then enable both it and `MassGameplay` in your `.uproject` and restart the editor:
+
+```json
+{ "Name": "BlueprintMCPRiotCrowd", "Enabled": true },
+{ "Name": "MassGameplay", "Enabled": true }
+```
+
+Its binary is prebuilt too, and carries the same `BuildId` as the core plugin — both must come from
+the same release or the editor will reject them.
+
 ## Notes
 
 - Binaries are tracked in this repo on purpose (`*.pdb` is excluded to keep it lean).
