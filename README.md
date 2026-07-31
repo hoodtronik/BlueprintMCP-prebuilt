@@ -18,7 +18,15 @@ without a C++ toolchain or a compile-on-open step.
 
 > Built from [`hoodtronik/Unreal-MCP-Ultra`](https://github.com/hoodtronik/Unreal-MCP-Ultra)
 > (formerly `ue5-mcp`) @ commit
-> [`075904f`](https://github.com/hoodtronik/Unreal-MCP-Ultra/commit/075904f) (branch `main`).
+> [`2d261fe`](https://github.com/hoodtronik/Unreal-MCP-Ultra/commit/2d261fe) (branch `main`).
+>
+> **Fixed in this build — `riot_get_capabilities` no longer under-reports Mass.** It probed for a
+> *plugin* named `MassEntity`, which is a content-only shell this project deliberately leaves
+> disabled (and which UE 5.8 removed entirely), so it answered `massEntity: false` on editors where
+> Mass was linked and every riot endpoint was serving. It now probes the engine **module** and
+> reports Mass modules under a separate `availableModules` key — engine modules are not plugins and
+> there is nothing for you to enable. Only relevant if you installed the optional Riot Crowd sibling
+> plugin.
 >
 > **New in this build — inline-image vision tools.** `viewport_capture` returns what the editor is
 > showing **inline in the tool result** as a PNG image block rather than writing a file and handing
