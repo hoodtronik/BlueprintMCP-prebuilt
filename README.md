@@ -18,9 +18,16 @@ without a C++ toolchain or a compile-on-open step.
 
 > Built from [`hoodtronik/Unreal-MCP-Ultra`](https://github.com/hoodtronik/Unreal-MCP-Ultra)
 > (formerly `ue5-mcp`) @ commit
-> [`2d261fe`](https://github.com/hoodtronik/Unreal-MCP-Ultra/commit/2d261fe) (branch `main`).
+> [`e198b2c`](https://github.com/hoodtronik/Unreal-MCP-Ultra/commit/e198b2c) (branch `main`).
 >
-> **Fixed in this build — `riot_get_capabilities` no longer under-reports Mass.** It probed for a
+> **New in this build — Riot Crowd rigged representation and animation LOD.** The optional Riot
+> Crowd sibling plugin gains character profiles (register, validate, and assign skeletal-mesh
+> profiles per faction) and a representation-LOD manager that decides which agents get a full
+> animated actor, which get an instanced-static-mesh stand-in, and which get nothing — under
+> explicit per-tier budgets, with distance hysteresis and idempotent manual promotion. 11 new riot
+> tools. Only relevant if you install the Riot Crowd sibling plugin; the core tools are unchanged.
+>
+> **Also fixed — `riot_get_capabilities` no longer under-reports Mass.** It probed for a
 > *plugin* named `MassEntity`, which is a content-only shell this project deliberately leaves
 > disabled (and which UE 5.8 removed entirely), so it answered `massEntity: false` on editors where
 > Mass was linked and every riot endpoint was serving. It now probes the engine **module** and
