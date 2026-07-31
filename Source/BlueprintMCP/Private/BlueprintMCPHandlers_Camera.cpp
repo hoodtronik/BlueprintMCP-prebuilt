@@ -57,8 +57,8 @@ FString FBlueprintMCPServer::HandleGetViewportCamera(const FString& Body)
 	// GetCameraSpeedSetting() was deprecated in 5.7 and its replacement
 	// (FEditorViewportCameraSpeedSettings) is float-only — there is no integer setting left to
 	// read, so the previous value is not reproducible. GetCameraSpeed() exists on 5.6 and 5.8
-	// alike and is what the field was always named for. Changed on 5.6 too, deliberately, to keep
-	// the two branches emitting the same thing.
+	// alike and is what the field was always named for. This is the one deprecation fix in this
+	// pass that changes an emitted value; the others are compile-surface only.
 	Result->SetNumberField(TEXT("cameraSpeed"), ViewportClient->GetCameraSpeed());
 
 	return JsonToString(Result);

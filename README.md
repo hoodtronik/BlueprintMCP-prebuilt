@@ -1,16 +1,25 @@
-# BlueprintMCP — Prebuilt (UE 5.6, Win64)
+# BlueprintMCP — Prebuilt (UE 5.8, Win64)
 
 This is the **compiled, drop-in build** of the BlueprintMCP plugin. It ships with
 `Binaries/Win64/` already built, so you can use it in a **Blueprint-only** UE project
 without a C++ toolchain or a compile-on-open step.
 
-- **Engine:** Unreal Engine **5.6**
+- **Engine:** Unreal Engine **5.8**
 - **Platform:** **Win64** (editor)
-- **Source repo:** https://github.com/hoodtronik/Unreal-MCP-Ultra
+- **Source repo:** https://github.com/hoodtronik/Unreal-MCP-Ultra-5.8
 
-> Built from [`hoodtronik/Unreal-MCP-Ultra`](https://github.com/hoodtronik/Unreal-MCP-Ultra)
-> (formerly `ue5-mcp`) @ commit
-> [`075904f`](https://github.com/hoodtronik/Unreal-MCP-Ultra/commit/075904f) (branch `main`).
+> **You are on the `5.8` branch.** The repository's `main` branch is the **UE 5.6** build. Prebuilt
+> binaries are engine-version-specific and will not load across versions — pick the branch that
+> matches your engine:
+>
+> | Engine | Branch | Source repo |
+> |---|---|---|
+> | UE 5.6 | `main` | [`Unreal-MCP-Ultra`](https://github.com/hoodtronik/Unreal-MCP-Ultra) |
+> | UE 5.8 | `5.8` | [`Unreal-MCP-Ultra-5.8`](https://github.com/hoodtronik/Unreal-MCP-Ultra-5.8) |
+
+> Built from [`hoodtronik/Unreal-MCP-Ultra-5.8`](https://github.com/hoodtronik/Unreal-MCP-Ultra-5.8)
+> @ commit
+> [`1545d44`](https://github.com/hoodtronik/Unreal-MCP-Ultra-5.8/commit/1545d44) (branch `main`).
 >
 > **New in this build — inline-image vision tools.** `viewport_capture` returns what the editor is
 > showing **inline in the tool result** as a PNG image block rather than writing a file and handing
@@ -134,9 +143,10 @@ the same release or the editor will reject them.
 ## Notes
 
 - Binaries are tracked in this repo on purpose (`*.pdb` is excluded to keep it lean).
-- If your engine version differs from 5.6, rebuild from the
-  [source repo](https://github.com/hoodtronik/Unreal-MCP-Ultra) instead — prebuilt binaries are
-  engine-version-specific.
+- If your engine version is neither 5.6 nor 5.8, rebuild from the
+  [source repo](https://github.com/hoodtronik/Unreal-MCP-Ultra-5.8) instead — prebuilt binaries are
+  engine-version-specific. Expect to fix some API drift; the 5.6 and 5.8 sources already differ in
+  five places, which the source repo's `CLAUDE.md` documents.
 - The MCP server bridge under `Tools/` still needs `npm install && npm run build`
   if you want to connect an MCP client; see the source repo for setup.
 

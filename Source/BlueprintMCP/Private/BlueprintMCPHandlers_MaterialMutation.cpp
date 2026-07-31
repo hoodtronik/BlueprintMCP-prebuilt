@@ -402,17 +402,13 @@ FString FBlueprintMCPServer::HandleSetMaterialProperty(const FString& Body)
 			Material->PostEditChange();
 		}
 	}
-	// CLAUDE-NOTE: reads go through GetUsageByFlag() (public on 5.6 and 5.8), but the WRITES below
-	// deliberately still assign the bUsedWith* members directly on this 5.6 branch.
-	//
-	// UMaterial::SetUsageByFlag() is PRIVATE on 5.6 and only became public (ENGINE_API) in 5.8 —
-	// using it here fails with C2248, which is how this was found. Direct assignment is not
-	// deprecated on 5.6, so it compiles clean; the 5.8 branch uses SetUsageByFlag() because there
-	// the members ARE deprecated. Same behaviour either way: engine-side SetUsageByFlag() is a
-	// switch assigning the very same member.
-	//
-	// Deliberately NOT SetMaterialUsage(), which is public on both but additionally validates and
-	// can trigger a recompile — that would be a real behaviour change, not a deprecation fix.
+	// CLAUDE-NOTE: these three read via GetUsageByFlag() and write via SetUsageByFlag() instead of
+	// touching the bUsedWith* members, which UE 5.8 deprecated and Epic will make private. Both
+	// accessors predate 5.6, so this form is correct on both engines. The swap is behaviour-
+	// preserving by construction: engine-side SetUsageByFlag() is a switch that assigns the very
+	// same member, and its contract ("doesn't validate the usage flag... doesn't trigger
+	// recompilation") matches what the direct assignment did. Deliberately NOT SetMaterialUsage(),
+	// which additionally validates and can kick off a recompile — that would be a behaviour change.
 	else if (Property == TEXT("bUsedWithSkeletalMesh"))
 	{
 		bool bValue = Json->GetBoolField(TEXT("value"));
@@ -422,7 +418,7 @@ FString FBlueprintMCPServer::HandleSetMaterialProperty(const FString& Body)
 		if (!bDryRun)
 		{
 			Material->PreEditChange(nullptr);
-			Material->bUsedWithSkeletalMesh = bValue ? 1 : 0;
+			Material->SetUsageByFlag(MATUSAGE_SkeletalMesh, bValue);
 			Material->PostEditChange();
 		}
 	}
@@ -435,7 +431,7 @@ FString FBlueprintMCPServer::HandleSetMaterialProperty(const FString& Body)
 		if (!bDryRun)
 		{
 			Material->PreEditChange(nullptr);
-			Material->bUsedWithMorphTargets = bValue ? 1 : 0;
+			Material->SetUsageByFlag(MATUSAGE_MorphTargets, bValue);
 			Material->PostEditChange();
 		}
 	}
@@ -448,7 +444,7 @@ FString FBlueprintMCPServer::HandleSetMaterialProperty(const FString& Body)
 		if (!bDryRun)
 		{
 			Material->PreEditChange(nullptr);
-			Material->bUsedWithNiagaraSprites = bValue ? 1 : 0;
+			Material->SetUsageByFlag(MATUSAGE_NiagaraSprites, bValue);
 			Material->PostEditChange();
 		}
 	}

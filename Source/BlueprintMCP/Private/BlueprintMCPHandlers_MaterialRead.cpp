@@ -982,10 +982,12 @@ FString FBlueprintMCPServer::HandleValidateMaterial(const FString& Body)
 	bool bValid = true;
 
 	// Check for compilation errors via FMaterialResource on current platform
-	// CLAUDE-NOTE: UE 5.6 changed UMaterial::GetMaterialResource() to take an
-	// ERHIFeatureLevel::Type, not an EShaderPlatform. GMaxRHIShaderPlatform no longer
-	// converts implicitly, so pass GMaxRHIFeatureLevel (the global feature level) instead.
-	FMaterialResource* Resource = Material->GetMaterialResource(GMaxRHIFeatureLevel);
+	// CLAUDE-NOTE: UE 5.8 reverted UMaterial::GetMaterialResource() back to taking an
+	// EShaderPlatform. 5.6 had briefly changed it to ERHIFeatureLevel::Type (which is why the
+	// 5.6 branch of this repo passes GMaxRHIFeatureLevel here). Neither enum converts implicitly
+	// to the other, so this line is genuinely engine-version-specific — if you port this file
+	// back to 5.6, GMaxRHIShaderPlatform must become GMaxRHIFeatureLevel again.
+	FMaterialResource* Resource = Material->GetMaterialResource(GMaxRHIShaderPlatform);
 
 	// CLAUDE-NOTE: a null Resource means the compile-error check never ran. This used to fall
 	// straight through with bValid still true, producing a response byte-identical to a genuinely
