@@ -8,6 +8,14 @@ without a C++ toolchain or a compile-on-open step.
 - **Platform:** **Win64** (editor)
 - **Source repo:** https://github.com/hoodtronik/Unreal-MCP-Ultra
 
+> **On UE 5.8? Use the [`5.8` branch](https://github.com/hoodtronik/BlueprintMCP-prebuilt/tree/5.8).**
+> Prebuilt binaries are engine-version-specific and will not load across versions.
+>
+> | Engine | Branch | Source repo |
+> |---|---|---|
+> | UE 5.6 | `main` (you are here) | [`Unreal-MCP-Ultra`](https://github.com/hoodtronik/Unreal-MCP-Ultra) |
+> | UE 5.8 | `5.8` | [`Unreal-MCP-Ultra-5.8`](https://github.com/hoodtronik/Unreal-MCP-Ultra-5.8) |
+
 > Built from [`hoodtronik/Unreal-MCP-Ultra`](https://github.com/hoodtronik/Unreal-MCP-Ultra)
 > (formerly `ue5-mcp`) @ commit
 > [`075904f`](https://github.com/hoodtronik/Unreal-MCP-Ultra/commit/075904f) (branch `main`).
