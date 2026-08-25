@@ -18,7 +18,7 @@ without a C++ toolchain or a compile-on-open step.
 
 > Built from [`hoodtronik/Unreal-MCP-Ultra`](https://github.com/hoodtronik/Unreal-MCP-Ultra)
 > (formerly `ue5-mcp`) @ commit
-> [`e198b2c`](https://github.com/hoodtronik/Unreal-MCP-Ultra/commit/e198b2c) (branch `main`).
+> [`464fc42`](https://github.com/hoodtronik/Unreal-MCP-Ultra/commit/464fc42) (branch `main`).
 >
 > **New in this build — Riot Crowd rigged representation and animation LOD.** The optional Riot
 > Crowd sibling plugin gains character profiles (register, validate, and assign skeletal-mesh
