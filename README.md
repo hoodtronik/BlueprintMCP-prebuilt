@@ -18,22 +18,17 @@ without a C++ toolchain or a compile-on-open step.
 
 > Built from [`hoodtronik/Unreal-MCP-Ultra`](https://github.com/hoodtronik/Unreal-MCP-Ultra)
 > (formerly `ue5-mcp`) @ commit
-> [`464fc42`](https://github.com/hoodtronik/Unreal-MCP-Ultra/commit/464fc42) (branch `main`).
+> [`9ac34fa`](https://github.com/hoodtronik/Unreal-MCP-Ultra/commit/9ac34fa) (branch `main`).
 >
-> **New in this build — Riot Crowd rigged representation and animation LOD.** The optional Riot
-> Crowd sibling plugin gains character profiles (register, validate, and assign skeletal-mesh
-> profiles per faction) and a representation-LOD manager that decides which agents get a full
-> animated actor, which get an instanced-static-mesh stand-in, and which get nothing — under
-> explicit per-tier budgets, with distance hysteresis and idempotent manual promotion. 11 new riot
-> tools. Only relevant if you install the Riot Crowd sibling plugin; the core tools are unchanged.
+> **New in this build — level Blueprints on demand.** Every tool that takes a Blueprint name
+> now accepts a map name too, and if that map has no Level Blueprint yet one is created for it
+> instead of the call failing. Level-Blueprint variables and event graphs can therefore be authored
+> from scratch on a fresh map (RenderStream / disguise exposure, level-scripted bridges).
 >
-> **Also fixed — `riot_get_capabilities` no longer under-reports Mass.** It probed for a
-> *plugin* named `MassEntity`, which is a content-only shell this project deliberately leaves
-> disabled (and which UE 5.8 removed entirely), so it answered `massEntity: false` on editors where
-> Mass was linked and every riot endpoint was serving. It now probes the engine **module** and
-> reports Mass modules under a separate `availableModules` key — engine modules are not plugins and
-> there is nothing for you to enable. Only relevant if you installed the optional Riot Crowd sibling
-> plugin.
+> **Also new — port-bind retry, `BlueprintMCP.Restart`, background tasks.** The editor
+> subsystem retries the HTTP port bind instead of giving up silently, the `BlueprintMCP.Restart`
+> console command restarts the server in-session, and long operations can run detached with
+> `?async=1` and be polled through `get_task_status`.
 >
 > **New in this build — inline-image vision tools.** `viewport_capture` returns what the editor is
 > showing **inline in the tool result** as a PNG image block rather than writing a file and handing
